@@ -20,9 +20,9 @@ const elements = [
     {ru:'0',en:'0',secondaryRu:')',secondaryEn:')', isControl:false},
     {ru:'-',en:'-',secondaryRu:'—',secondaryEn:'–', isControl:false},
     {ru:'=',en:'=',secondaryRu:'+',secondaryEn:'+', isControl:false},
-    {ru:'Backspace',en:'Backspace',secondaryRu:'',secondaryEn:'', isControl:true},
+    {ru:'Backspace',en:'Backspace',secondaryRu:'',secondaryEn:'', isControl:true, controlSymbol: 'backspace'},
 
-    {ru:'Tab',en: 'Tab',secondaryRu: '', secondaryEn:'', isControl:true},
+    {ru:'Tab',en: 'Tab',secondaryRu: '', secondaryEn:'', isControl:true, controlSymbol:'tab'},
     {ru:'Й',en:'Q', secondaryRu:'', secondaryEn:'', isControl:false},
     {ru:'Ц',en: 'W',secondaryRu:'',secondaryEn:'', isControl:false},
     {ru:'У',en: 'E', secondaryRu:'', secondaryEn:'', isControl:false},
@@ -36,9 +36,9 @@ const elements = [
     {ru:'Х',en:'[',secondaryRu:'',secondaryEn:'', isControl:false},
     {ru:'Ъ',en:']',secondaryRu:'',secondaryEn:'', isControl:false},
     {ru:'\\',en:'\\',secondaryRu:'',secondaryEn:'', isControl:false},
-    {ru:'DEL',en:'DEL',secondaryRu:'',secondaryEn:'', isControl:true},
+    {ru:'DEL',en:'DEL',secondaryRu:'',secondaryEn:'', isControl:true, controlSymbol: 'del'},
 
-    {ru:'Caps Lock',en: 'Caps Lock',secondaryRu: '', secondaryEn:'', isControl:true},
+    {ru:'Caps Lock',en: 'Caps Lock',secondaryRu: '', secondaryEn:'', isControl:true, controlSymbol: 'capslock'},
     {ru:'Ф',en:'A', secondaryRu:'', secondaryEn:'', isControl:false},
     {ru:'Ы',en: 'S',secondaryRu:'',secondaryEn:'', isControl:false},
     {ru:'В',en: 'D', secondaryRu:'', secondaryEn:'', isControl:false},
@@ -50,9 +50,9 @@ const elements = [
     {ru:'Д',en:'L',secondaryRu:'',secondaryEn:'', isControl:false},
     {ru:'Ж',en:';',secondaryRu:'',secondaryEn:'', isControl:false},
     {ru:'Э',en:'\'',secondaryRu:'',secondaryEn:'', isControl:false},
-    {ru:'ENTER',en:'ENTER',secondaryRu:'',secondaryEn:'', isControl:true},
+    {ru:'ENTER',en:'ENTER',secondaryRu:'',secondaryEn:'', isControl:true,controlSymbol:"enter"},
 
-    {ru:'Shift',en: 'Shift',secondaryRu: '', secondaryEn:'', isControl:true},
+    {ru:'Shift',en: 'Shift',secondaryRu: '', secondaryEn:'', isControl:true, controlSymbol: "shift"},
     {ru:'\\',en:'\\', secondaryRu:'', secondaryEn:'', isControl:false},
     {ru:'Я',en: 'Z',secondaryRu:'',secondaryEn:'', isControl:false},
     {ru:'Ч',en: 'X', secondaryRu:'', secondaryEn:'', isControl:false},
@@ -64,18 +64,18 @@ const elements = [
     {ru:'Б',en:'.',secondaryRu:'',secondaryEn:'', isControl:false},
     {ru:'Ю',en:',',secondaryRu:'',secondaryEn:'', isControl:false},
     {ru:'/',en:'\/',secondaryRu:'',secondaryEn:'', isControl:false},
-    {ru:'&#9650;',en:'&#9650;',secondaryRu:'',secondaryEn:'', isControl:true},
-    {ru:'Shift',en:'Shift',secondaryRu:'',secondaryEn:'', isControl:true},
+    {ru:'&#9650;',en:'&#9650;',secondaryRu:'',secondaryEn:'', isControl:true, controlSymbol: "arrowUp"},
+    {ru:'Shift',en:'Shift',secondaryRu:'',secondaryEn:'', isControl:true, controlSymbol: "shift"},
 
-    {ru:'Ctrl',en: 'Ctrl',secondaryRu: '', secondaryEn:'', isControl:true},
-    {ru:'Win',en:'Win', secondaryRu:'', secondaryEn:'', isControl:true},
-    {ru:'Alt',en: 'Alt',secondaryRu:'',secondaryEn:'', isControl:true},
+    {ru:'Ctrl',en: 'Ctrl',secondaryRu: '', secondaryEn:'', isControl:true, controlSymbol: "control"},
+    {ru:'Win',en:'Win', secondaryRu:'', secondaryEn:'', isControl:true, controlSymbol: "meta"},
+    {ru:'Alt',en: 'Alt',secondaryRu:'',secondaryEn:'', isControl:true, controlSymbol: "alt"},
     {ru:' ',en: ' ', secondaryRu:'', secondaryEn:'', isControl:false},
-    {ru:'Alt',en:'Alt', secondaryRu:'',secondaryEn:'', isControl:true},
-    {ru:'Ctrl',en:'Ctrl',secondaryRu:'',secondaryEn:'', isControl:true},
-    {ru:'&#9668;',en:'&#9668;',secondaryRu:'',secondaryEn:'', isControl:true},
-    {ru:'&#9660;',en:'&#9660;',secondaryRu:'',secondaryEn:'', isControl:true},
-    {ru:'&#9658;',en:'&#9658;',secondaryRu:'',secondaryEn:'', isControl:true},
+    {ru:'Alt',en:'Alt', secondaryRu:'',secondaryEn:'', isControl:true, controlSymbol: "alt"},
+    {ru:'Ctrl',en:'Ctrl',secondaryRu:'',secondaryEn:'', isControl:true, controlSymbol: "control"},
+    {ru:'&#9668;',en:'&#9668;',secondaryRu:'',secondaryEn:'', isControl:true, controlSymbol: "arrowLeft"},
+    {ru:'&#9660;',en:'&#9660;',secondaryRu:'',secondaryEn:'', isControl:true, controlSymbol: "arrowDown"},
+    {ru:'&#9658;',en:'&#9658;',secondaryRu:'',secondaryEn:'', isControl:true, controlSymbol: "arrowRight"},
 ];
 function render(lang = 'ru', type) {
     elements.forEach((el) => {
@@ -92,7 +92,7 @@ function render(lang = 'ru', type) {
             <span class="secondary-key">
                 ${lang === 'ru'? el.secondaryRu: el.secondaryEn}
             </span>
-            <span data-content="${el.isControl? "": primaryKey}" class="primary-key">
+            <span data-control = "${el.isControl? el.controlSymbol.toLowerCase().replace(" ", ""): ""}" data-content="${el.isControl? "": primaryKey}" class="primary-key">
                 ${primaryKey}
             </span>
         `;
@@ -169,13 +169,29 @@ wrapper.addEventListener('mouseup', (event) => {
     }
 })
 
-wrapper.addEventListener('keydown', (event) => {
-    const target = event.target;
-    if(target.classList.contains('key')) {
-        if(target.classList.contains('active')) {
-            target.classList.remove('active');
-        } else {
-            target.classList.add('active');
-        }
+document.addEventListener('keydown', (event) => {
+    const key = event.key;
+    console.log("key: ", key, "lower case key: ", key.toLowerCase());
+    let elements = document.querySelectorAll(`[data-content="${key.toLowerCase()}"]`);
+    if(elements.length === 0) {
+        elements = document.querySelectorAll(`[data-control="${key.toLowerCase()}"]`)
+    }
+    console.log("elements: ", elements, "    ", "elements.length: ", elements.length)
+    if(elements.length) {
+        elements.forEach((el) => {
+            el.parentNode.classList.add("active");
+        })
+    }
+})
+document.addEventListener('keyup', (event) => {
+    const key = event.key;
+    let elements = document.querySelectorAll(`[data-content="${key.toLowerCase()}"]`);
+    if(elements.length === 0) {
+        elements = document.querySelectorAll(`[data-control="${key.toLowerCase()}"]`)
+    }
+    if(elements.length) {
+        elements.forEach((el) => {
+            el.parentNode.classList.remove("active");
+        })
     }
 })

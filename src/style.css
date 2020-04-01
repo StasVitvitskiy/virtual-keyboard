@@ -53,9 +53,9 @@ body {
     grid-column-start: 4;
     grid-column-end: 11;
 }
-.active {
-    background-color: aqua;
-}
 .is-control {
     background-color: black;
+}
+.active {
+    background-color: aqua;
 }
