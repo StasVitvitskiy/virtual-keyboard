@@ -22,6 +22,7 @@ body {
     max-width: 850px;
     margin-top: 50px;
     width:100%;
+    user-select: none;
 }
 .key {
     background-color: #39414E;
@@ -30,6 +31,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 .key:nth-of-type(14) {
     grid-column-start: 14;
@@ -50,4 +52,10 @@ body {
 .key:nth-child(60) {
     grid-column-start: 4;
     grid-column-end: 11;
+}
+.active {
+    background-color: aqua;
+}
+.is-control {
+    background-color: black;
 }
