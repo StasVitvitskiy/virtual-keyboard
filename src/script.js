@@ -182,6 +182,21 @@ document.addEventListener('keydown', (event) => {
             el.parentNode.classList.add("active");
         })
     }
+    //change language on alt + shift
+    if(key.toLowerCase() === 'alt') {
+        altPressed = true;
+    }
+    if(key.toLowerCase() === "shift" && !altPressed) {
+        wrapper.innerHTML = "";
+        keyboardCase = keyboardCase === "lower"? 'upper':'lower';
+        render(lang, keyboardCase);
+    }
+    if(key.toLowerCase() === 'shift' && altPressed) {
+        wrapper.innerHTML = "";
+        lang = lang === 'en'? 'ru' : 'en';
+        render(lang, keyboardCase);
+        altPressed = false;
+    }
 })
 document.addEventListener('keyup', (event) => {
     const key = event.key;
@@ -194,4 +209,4 @@ document.addEventListener('keyup', (event) => {
             el.parentNode.classList.remove("active");
         })
     }
-})
+});
