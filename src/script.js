@@ -122,14 +122,18 @@ let altPressed = false;
 wrapper.addEventListener('click', (event) => {
     const target = event.target;
     let symbol = "";
+    let dataControl = "";
     if(target.classList.contains('key')) {
         symbol = target.querySelector('.primary-key').getAttribute('data-content');
+        dataControl = target.querySelector('.primary-key').getAttribute('data-control');
     }
     if(target.classList.contains('primary-key')) {
         symbol = target.getAttribute('data-content');
+        dataControl = target.getAttribute('data-control');
     }
     if(target.classList.contains('secondary-key')) {
         symbol = target.parentNode.querySelector('.primary-key').getAttribute('data-content');
+        dataControl = target.parentNode.querySelector('.primary-key').getAttribute('data-control');
     }
     symbol = keyboardCase === "lower" ? symbol.toUpperCase() : symbol.toLowerCase();
     textArea.value += symbol === ' ' ? symbol : symbol.trim();
@@ -170,6 +174,9 @@ wrapper.addEventListener('click', (event) => {
     }
     if(target.innerHTML.trim().toLowerCase() === "tab") {
         textArea.value += "   ";
+    }
+    if(dataControl.toLowerCase() === "arrowup" || dataControl.toLowerCase() === "arrowleft" || dataControl.toLowerCase() === "arrowright" || dataControl.toLowerCase() === "arrowdown"){
+        textArea.value += target.innerText;
     }
     textArea.focus();
 } )
