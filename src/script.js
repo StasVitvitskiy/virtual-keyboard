@@ -1,11 +1,24 @@
 const wrapper = document.createElement('div');
 const textArea = document.createElement('textarea');
+const description = document.createElement('div');
+const h1 = document.createElement('h1');
+const p = document.createElement('p');
 let lang = 'ru';
 let keyboardCase = 'lower';
 document.body.appendChild(textArea);
 document.body.appendChild(wrapper);
+document.body.appendChild(description);
+description.appendChild(h1);
+description.appendChild(p);
 wrapper.className = 'wrapper';
 textArea.className = 'display';
+description.className = 'description';
+h1.innerText = "Virtual Keyboard Functionality";
+p.innerText = "1) To change language on the virtual keyboard itself, click alt and then shift buttons \n" +
+    "2) to change language on your keyboard press the same (alt + shift) combination \n" +
+    "3) To capitalize letters – press shift on the virtual keyboard\n " +
+    "4) To capitalize letters – press shift on the your keyboard\n" +
+    "Keyboard was created in Mac OS, HOWEVER Windows functionality was implemented!"
 const elements = [
     {ru:'ё',en: '`',secondaryRu: '', secondaryEn:'~', isControl:false},
     {ru:'1',en:'1', secondaryRu:'!', secondaryEn:'!', isControl:false},
@@ -92,7 +105,7 @@ function render(lang = 'ru', type) {
             <span class="secondary-key">
                 ${lang === 'ru'? el.secondaryRu: el.secondaryEn}
             </span>
-            <span data-control = "${el.isControl? el.controlSymbol.toLowerCase().replace(" ", ""): ""}" data-content="${el.isControl? "": primaryKey}" class="primary-key">
+            <span data-control = "${el.isControl? el.controlSymbol.toLowerCase().replace(" ", ""): ""}" data-content="${el.isControl? "": primaryKey.toLowerCase()}" class="primary-key">
                 ${primaryKey}
             </span>
         `;
@@ -117,6 +130,7 @@ wrapper.addEventListener('click', (event) => {
     if(target.classList.contains('secondary-key')) {
         symbol = target.parentNode.querySelector('.primary-key').getAttribute('data-content');
     }
+    symbol = keyboardCase === "lower" ? symbol.toUpperCase() : symbol.toLowerCase();
     textArea.value += symbol === ' ' ? symbol : symbol.trim();
     // add text area reset on delete
     if(target.innerHTML.trim().toLowerCase() === 'del') {
@@ -179,7 +193,20 @@ document.addEventListener('keydown', (event) => {
     console.log("elements: ", elements, "    ", "elements.length: ", elements.length)
     if(elements.length) {
         elements.forEach((el) => {
+            console.log(el.parentNode, "classlist: ", el.parentNode.classList);
             el.parentNode.classList.add("active");
+        })
+    }
+})
+document.addEventListener('keyup', (event) => {
+    const key = event.key;
+    let elements = document.querySelectorAll(`[data-content="${key.toLowerCase()}"]`);
+    if(elements.length === 0) {
+        elements = document.querySelectorAll(`[data-control="${key.toLowerCase()}"]`)
+    }
+    if(elements.length) {
+        elements.forEach((el) => {
+            el.parentNode.classList.remove("active");
         })
     }
     //change language on alt + shift
@@ -196,17 +223,5 @@ document.addEventListener('keydown', (event) => {
         lang = lang === 'en'? 'ru' : 'en';
         render(lang, keyboardCase);
         altPressed = false;
-    }
-})
-document.addEventListener('keyup', (event) => {
-    const key = event.key;
-    let elements = document.querySelectorAll(`[data-content="${key.toLowerCase()}"]`);
-    if(elements.length === 0) {
-        elements = document.querySelectorAll(`[data-control="${key.toLowerCase()}"]`)
-    }
-    if(elements.length) {
-        elements.forEach((el) => {
-            el.parentNode.classList.remove("active");
-        })
     }
 });
