@@ -135,11 +135,21 @@ wrapper.addEventListener('click', (event) => {
     textArea.value += symbol === ' ' ? symbol : symbol.trim();
     // add text area reset on delete
     if(target.innerHTML.trim().toLowerCase() === 'del') {
-        textArea.value = "";
+        let cursorPosition = textArea.selectionStart;
+        textArea.value = textArea.value.split("").filter((el,i) => {
+            return i !== textArea.selectionStart;
+        }).join("");
+        textArea.selectionStart = cursorPosition;
+        textArea.selectionEnd = cursorPosition;
     }
     // add text area backspace functionality
     if(target.innerHTML.trim().toLowerCase() === 'backspace') {
-        textArea.value = textArea.value.slice(0,-1);
+        let cursorPosition = textArea.selectionStart;
+        textArea.value = textArea.value.split("").filter((el,i) => {
+            return i !== textArea.selectionStart - 1;
+        }).join("");
+        textArea.selectionStart = cursorPosition - 1;
+        textArea.selectionEnd = cursorPosition - 1;
     }
     if(target.innerHTML.trim().toLowerCase() === 'enter') {
         textArea.value += "\r\n";
