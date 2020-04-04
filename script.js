@@ -328,6 +328,7 @@ wrapper.addEventListener('mouseup', (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
+  textArea.focus();
   const { key } = event;
   let htmlElements = document.querySelectorAll(`[data-content="${key.toLowerCase()}"]`);
   if (htmlElements.length === 0) {
