@@ -12,6 +12,8 @@ body {
     width: 850px;
     margin-top: 30px;
     height:100px;
+    resize: none;
+    border-radius: 5px;
 }
 .wrapper {
     display: grid;
@@ -58,4 +60,12 @@ body {
 }
 .active {
     background-color: aqua;
+}
+.description {
+    background-color: #D5D5D5;
+    width:67%;
+    margin-top: 3%;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px #625B51;
 }
