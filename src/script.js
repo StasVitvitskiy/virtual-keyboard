@@ -3,7 +3,7 @@ const textArea = document.createElement('textarea');
 const description = document.createElement('div');
 const h1 = document.createElement('h1');
 const p = document.createElement('p');
-let lang = 'ru';
+let lang = localStorage.getItem('lang');
 let keyboardCase = 'lower';
 document.body.appendChild(textArea);
 document.body.appendChild(wrapper);
@@ -91,6 +91,7 @@ const elements = [
     {ru:'&#9658;',en:'&#9658;',secondaryRu:'',secondaryEn:'', isControl:true, controlSymbol: "arrowRight"},
 ];
 function render(lang = 'ru', type) {
+    localStorage.setItem('lang', lang);
     elements.forEach((el) => {
         const key = document.createElement('div');
         let primaryKey = lang === 'ru'?el.ru:el.en;
@@ -116,7 +117,7 @@ function render(lang = 'ru', type) {
         wrapper.appendChild(key);
     })
 }
-render('ru', 'lower');
+render(lang, 'lower');
 let altPressed = false;
 wrapper.addEventListener('click', (event) => {
     const target = event.target;
@@ -185,15 +186,12 @@ wrapper.addEventListener('mouseup', (event) => {
 
 document.addEventListener('keydown', (event) => {
     const key = event.key;
-    console.log("key: ", key, "lower case key: ", key.toLowerCase());
     let elements = document.querySelectorAll(`[data-content="${key.toLowerCase()}"]`);
     if(elements.length === 0) {
         elements = document.querySelectorAll(`[data-control="${key.toLowerCase()}"]`)
     }
-    console.log("elements: ", elements, "    ", "elements.length: ", elements.length)
     if(elements.length) {
         elements.forEach((el) => {
-            console.log(el.parentNode, "classlist: ", el.parentNode.classList);
             el.parentNode.classList.add("active");
         })
     }
